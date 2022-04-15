@@ -1,15 +1,14 @@
 package education.cccp.mobile.room;
 
 
+import static androidx.room.Room.inMemoryDatabaseBuilder;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static education.cccp.mobile.room.TestData.users;
 
 import android.content.Context;
 
-import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,14 +22,17 @@ import education.cccp.mobile.room.dao.UserDao;
 import education.cccp.mobile.room.model.User;
 
 @RunWith(AndroidJUnit4.class)
-public class DbTest {
+public class InMemoryDbTest {
     private AppDb db;
     private UserDao userDao;
 
     @Before
     public void setUp() {
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        db = Room.inMemoryDatabaseBuilder(context, AppDb.class).build();
+        Context context = getInstrumentation()
+                .getTargetContext();
+        db = inMemoryDatabaseBuilder(context,
+                AppDb.class)
+                .build();
         userDao = db.userDao();
     }
 
