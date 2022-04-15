@@ -1,16 +1,18 @@
 package education.cccp.mobile.room;
 
+import static java.util.Locale.getDefault;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import education.cccp.mobile.room.model.User;
 
-public class TestData {
-    static SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
-    static List<User> users;
+public class Data {
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy", getDefault());
+    private static List<User> users;
+
     static {
         users = new ArrayList<>();
         try {
@@ -37,7 +39,7 @@ public class TestData {
                     "joe.bloggs@acme.com",
                     "Joe",
                     "Bloggs",
-                    formatter.parse("10/02/2021"),
+                    formatter.parse("10/02/2019"),
                     "password"));
             users.add(new User(
                     4L,
@@ -45,7 +47,7 @@ public class TestData {
                     "joe.schmoe@acme.com",
                     "Joe",
                     "Schmoe",
-                    formatter.parse("10/02/2021"),
+                    formatter.parse("10/02/2018"),
                     "password"));
             users.add(new User(
                     5L,
@@ -53,7 +55,7 @@ public class TestData {
                     "dick.harry@acme.com",
                     "Dick",
                     "Harry",
-                    formatter.parse("10/02/2021"),
+                    formatter.parse("10/02/2017"),
                     "password"));
 
         } catch (ParseException e) {

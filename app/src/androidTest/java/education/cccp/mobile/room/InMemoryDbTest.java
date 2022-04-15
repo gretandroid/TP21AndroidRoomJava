@@ -4,7 +4,8 @@ package education.cccp.mobile.room;
 import static androidx.room.Room.inMemoryDatabaseBuilder;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertEquals;
-import static education.cccp.mobile.room.TestData.users;
+
+import static education.cccp.mobile.room.Data.findAll;
 
 import android.content.Context;
 
@@ -36,6 +37,11 @@ public class InMemoryDbTest {
         userDao = db.userDao();
     }
 
+    @After
+    public void destroy() {
+        db.close();
+    }
+
     @Test
     public void canary() {
     }
@@ -44,34 +50,34 @@ public class InMemoryDbTest {
     @Test
     public void test_save_with_correct_user() {
         assertEquals(0, userDao.count());
-        userDao.save(users.get(0));
+        userDao.save(findAll().get(0));
         assertEquals(1, userDao.count());
     }
 
     @Test
     public void test_save_all() {
-        assertEquals(users.size(), 5);
+        assertEquals(findAll().size(), 5);
         assertEquals(0, userDao.count());
-        userDao.saveAll(users);
+        userDao.saveAll(findAll());
         System.out.println(userDao.count());
-        assertEquals(users.size(), userDao.count());
+        assertEquals(findAll().size(), userDao.count());
     }
 
     @Test
     public void test_delete() {
         assertEquals(0, userDao.count());
-        userDao.saveAll(users);
-        assertEquals(users.size(), userDao.count());
-        userDao.delete(users.get(0));
-        assertEquals(users.size() - 1, userDao.count());
+        userDao.saveAll(findAll());
+        assertEquals(findAll().size(), userDao.count());
+        userDao.delete(findAll().get(0));
+        assertEquals(findAll().size() - 1, userDao.count());
     }
 
 
     @Test
     public void test_delete_all() {
         assertEquals(0, userDao.count());
-        userDao.saveAll(users);
-        assertEquals(users.size(), userDao.count());
+        userDao.saveAll(findAll());
+        assertEquals(findAll().size(), userDao.count());
         userDao.deleteAll();
         assertEquals(0, userDao.count());
     }
@@ -79,19 +85,10 @@ public class InMemoryDbTest {
     @Test
     public void test_find_all() {
         assertEquals(0, userDao.count());
-        userDao.saveAll(users);
-        assertEquals(users.size(), userDao.count());
-        List<User> resuList = userDao.findAll();
-        assertEquals(resuList.get(0), users.get(0));
-        assertEquals(resuList.get(1), users.get(1));
-        assertEquals(resuList.get(2), users.get(2));
-        assertEquals(resuList.get(3), users.get(3));
-        assertEquals(resuList.get(4), users.get(4));
-    }
-
-
-    @After
-    public void destroy() {
-        db.close();
+        userDao.saveAll(findAll());
+        assertEquals(findAll().size(), userDao.count());
+        List<User> resultList = userDao.findAll();
+        for (int i = 0; i < findAll().size(); i++)
+            assertEquals(resultList.get(i), findAll().get(i));
     }
 }
