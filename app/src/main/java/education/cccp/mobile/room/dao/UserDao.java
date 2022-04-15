@@ -39,6 +39,6 @@ public interface UserDao {
     @Query("SELECT count(*) FROM user")
     int count();
 
-    @Query("SELECT * FROM user order by user_id ASC")
-    LiveData<List<User>> findAll();
+    @Query("SELECT * FROM user")
+    List<User> findAll();
 }

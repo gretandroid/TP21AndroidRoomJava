@@ -2,6 +2,7 @@ package education.cccp.mobile.room;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static education.cccp.mobile.room.TestData.users;
 
 import android.content.Context;
@@ -12,7 +13,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,7 +26,6 @@ import education.cccp.mobile.room.model.User;
 public class DbTest {
     private AppDb db;
     private UserDao userDao;
-    private User user;
 
     @Before
     public void setUp() {
@@ -49,7 +48,7 @@ public class DbTest {
 
     @Test
     public void test_save_all() {
-        assertEquals(users.size(),5);
+        assertEquals(users.size(), 5);
         assertEquals(0, userDao.count());
         userDao.saveAll(users);
         System.out.println(userDao.count());
@@ -80,10 +79,12 @@ public class DbTest {
         assertEquals(0, userDao.count());
         userDao.saveAll(users);
         assertEquals(users.size(), userDao.count());
-        List<User> resuList = userDao.findAll().getValue();
-        for (int i = 0; i < users.size(); i++) {
-            assertEquals(resuList.get(i), users.get(i));
-        }
+        List<User> resuList = userDao.findAll();
+        assertEquals(resuList.get(0), users.get(0));
+        assertEquals(resuList.get(1), users.get(1));
+        assertEquals(resuList.get(2), users.get(2));
+        assertEquals(resuList.get(3), users.get(3));
+        assertEquals(resuList.get(4), users.get(4));
     }
 
 
